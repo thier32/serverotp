@@ -1,5 +1,6 @@
 package com.server.otp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,9 +20,11 @@ public class Otp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String reference;
 
     @Column(nullable = false)
@@ -32,20 +35,11 @@ public class Otp {
 
     @Column(nullable = false)
     @CreationTimestamp
+    @JsonIgnore
     private Date creationdate;
 
     @Column(nullable = false)
+    @JsonIgnore
     private Date expirationdate;
 
-
-    /*
-    public Date getExpirationdate()
-    {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(creationdate);
-        calendar.add(Calendar.MINUTE, 5);
-        expirationdate = calendar.getTime();
-        this.setExpirationdate(expirationdate);
-        return expirationdate;
-    }*/
 }

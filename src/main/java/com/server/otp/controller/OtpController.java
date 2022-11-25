@@ -6,10 +6,7 @@ import com.server.otp.listener.OtpResponseListener;
 import com.server.otp.util.FunctionCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,11 +16,6 @@ public class OtpController extends BaseController
 {
     @Autowired
     OtpResponseListener otpResponseListener;
-
-    @RequestMapping("/")
-    public String home() {
-        return "Hello Docker World";
-    }
 
     @PostMapping("/generate")
     public ResponseEntity crtGenererOtp(HttpServletRequest request , @RequestBody OtpDto optDto)
@@ -37,19 +29,19 @@ public class OtpController extends BaseController
         return responseEntity;
     }
 
-    @PostMapping("/list")
-    public ResponseEntity crtListOtp(HttpServletRequest request , @RequestBody CritereDto critereDto)
+    @GetMapping("/list")
+    public ResponseEntity crtListOtp(HttpServletRequest request)
     {
         ResponseEntity responseEntity = responseManager.
                 rsmBuildResult(request,
                         otpResponseListener.listListener,
-                        critereDto,
-                        FunctionCode.crtGenererOtp
+                        null,
+                        FunctionCode.crtListOtp
                 );
         return responseEntity;
     }
 
-    @PostMapping("/verify")
+    @PostMapping("/validate")
     public ResponseEntity crtVerifyOtp(HttpServletRequest request , @RequestBody CritereDto critereDto)
     {
         ResponseEntity responseEntity = responseManager.

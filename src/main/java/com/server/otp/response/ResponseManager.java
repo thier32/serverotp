@@ -62,7 +62,11 @@ public class ResponseManager {
             }else{
                 custumApiResponse.setMessage(functionCode.getErrorMessage());
             }
-            custumApiResponse.setResult(result);
+            if(result instanceof Boolean){
+                custumApiResponse.setResult(custumApiResponse.getMessage());
+            }else{
+                custumApiResponse.setResult(result);
+            }
         }
         custumApiResponse.setStatus(status);
 

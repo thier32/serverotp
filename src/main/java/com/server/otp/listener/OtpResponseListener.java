@@ -11,8 +11,11 @@ import org.springframework.stereotype.Component;
 public class OtpResponseListener {
     @Autowired
     OtpLogic otpLogic;
+
+
+
     public ResponseListener generateListener = new ResponseAdapter(){
-        @Override
+
         public <M, C, T> T execute(M model, C codeFonction) throws OtpException
         {
             return (T) otpLogic.lgcNewOtp(model,codeFonction);
@@ -28,12 +31,14 @@ public class OtpResponseListener {
         }
     };
 
+
     public ResponseListener listListener = new ResponseAdapter(){
+
         @Override
-        public <M, C, T> T execute(M model, C codeFonction) throws OtpException
-        {
-            T result = otpLogic.lgcListOtp(model,codeFonction);
-            return (T) result;
+        public <M, C, T> T execute(M model, C codeFonction) throws OtpException {
+            return (T) otpLogic.lgcListOtp(codeFonction);
         }
     };
+
+
 }

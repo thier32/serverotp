@@ -1,8 +1,9 @@
 package com.server.otp.util;
 
 public enum  FunctionCode {
-    crtGenererOtp("CRTGO01","generer.otp.success","generer.otp.fail"),
-    crtVerifyOtp("CRTGVO02","verify.otp.success","verify.otp.fail"),
+    crtGenererOtp("CRTGO01","success","generer.otp.fail"),
+    crtListOtp("CTRLO002","list.otp.success","list.otp.fail"),
+    crtVerifyOtp("CRTGVO02","success","failed"),
     rsmBuildResult("RSMBR","build.result.success","build.result.fail"),
     lgcNewOtp("LGCNO03","new.otp.success","new.otp.fail"),
     lgcListOtp("LGCLO04","list.otp.success","list.otp.fail"),

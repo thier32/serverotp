@@ -2,6 +2,7 @@ package com.server.otp.logic;
 
 import com.server.otp.dto.CritereDto;
 import com.server.otp.dto.OtpDto;
+import com.server.otp.dto.OtpResultDto;
 import com.server.otp.entity.Otp;
 import com.server.otp.error.OtpException;
 import com.server.otp.util.FunctionCode;
@@ -16,13 +17,14 @@ import java.util.regex.Pattern;
 @Component
 public class OtpLogic extends BaseLogic {
 
-    public <T,F>  Otp lgcNewOtp(T otpdto, F codeFonction) throws  OtpException {
+    public <T,F>  OtpResultDto lgcNewOtp(T otpdto, F codeFonction) throws  OtpException {
         FunctionCode fonctionCode = FunctionCode.lgcNewOtp.updateParent((FunctionCode) codeFonction);
 
         if(!(otpdto instanceof OtpDto))
             throw new OtpException(fonctionCode);
 
         Otp otp;
+        OtpResultDto otpResultDto;
         OtpDto otpDto = (OtpDto) otpdto;
         try
         {
@@ -43,17 +45,18 @@ public class OtpLogic extends BaseLogic {
             otp.setCreationdate(date);
             otp.setExpirationdate(GeneratorUtil.buildExpiryDate(date));
 
-            lgcSaveOtp(otp,fonctionCode);
+            otp =lgcSaveOtp(otp,fonctionCode);
         }
         catch (OtpException otpException)
         {
             throw new OtpException(otpException.getFunctionCode());
         }
-        System.out.println(otp);
-        return otp;
+
+        otpResultDto = map(otp,OtpResultDto.class);
+        return otpResultDto;
     }
 
-    public <M,F,T> T lgcListOtp(M critere , F codeFonction) throws OtpException {
+    public <F> List<Otp> lgcListOtp(F codeFonction) throws OtpException {
         FunctionCode fonctionCode = FunctionCode.lgcListOtp.updateParent((FunctionCode) codeFonction);
         List<Otp> otps;
         try
@@ -64,7 +67,7 @@ public class OtpLogic extends BaseLogic {
         {
             throw new OtpException(fonctionCode);
         }
-        return (T) otps;
+        return otps;
     }
 
     public <T,F> boolean lgcVerifierOtp(T critere , F codeFonction) throws OtpException
